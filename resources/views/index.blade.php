@@ -6,6 +6,7 @@
   <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
   <title>{{ env('APP_NAME') }} - Muaz</title>
+  <meta name="app-url" content="{{ env('APP_URL') }}" />
 </head>
 
 <body>

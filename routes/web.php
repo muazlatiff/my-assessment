@@ -18,7 +18,7 @@ Route::get('/', function () {
     // return view('welcome');
 });
 
-Route::get('custom-js/{jsPath}', [App\Http\Controllers\JsController::class, 'index']);
+Route::get('custom-js/{jsPath}', [App\Http\Controllers\JsController::class, 'index'])->name('custom-js');
 Route::get('login', [App\Http\Controllers\AuthController::class, 'index_login']);
 Route::get('register', [App\Http\Controllers\AuthController::class, 'index_register']);
  

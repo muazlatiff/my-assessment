@@ -6,6 +6,7 @@
   <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
   <title>Register : {{ env('APP_NAME') }} - Muaz</title>
+  <meta name="app-url" content="{{ env('APP_URL') }}" />
 </head>
 
 <body>
@@ -21,11 +22,11 @@
               Register
             </h2>
           </div>
-          <form class="mt-8 space-y-6" action="{{ url('api/register') }}" method="POST">
+          <form class="mt-8 space-y-6" id="form-register" method="POST" action="{{ url('api/register') }}">
             <div class="rounded-md shadow-sm -space-y-px">
               <div>
                 <label for="name" class="sr-only">Name</label>
-                <input id="name" name="email" type="text" required
+                <input id="name" name="name" type="text" required
                   class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                   placeholder="Name">
               </div>
@@ -65,6 +66,7 @@
   </div>
 
   <script src="{{ asset('js/app.js') }}"></script>
+  <script src="{{ route('custom-js', 'register.js') }}"></script>
 
 </body>
 
