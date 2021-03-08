@@ -60,7 +60,9 @@ class AuthController extends Controller
      */
     public function index_login(Request $request)
     {
-        return view('login');
+        return ( auth()->user() ) ?
+            redirect('/') :
+            view('login');
     }
  
     /**
@@ -68,7 +70,9 @@ class AuthController extends Controller
      */
     public function index_register(Request $request)
     {
-        return view('register');
+        return ( auth()->user() ) ?
+            redirect('/') :
+            view('register');
     }
 
     //

@@ -31180,6 +31180,15 @@ body {
   font-family: 'Nunito', sans-serif;
 }
 
+.navigate a {
+  color: hsl(250, 50%, 50%);
+}
+
+.navigate a:hover {
+  color: hsl(250, 80%, 25%);
+  text-decoration: underline;
+}
+
 @media (min-width: 640px) {
   .sm\:container {
     width: 100%;
