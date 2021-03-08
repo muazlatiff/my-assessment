@@ -1,4 +1,5 @@
 const mix = require('laravel-mix');
+const fs = require('fs');
 
 /*
  |--------------------------------------------------------------------------
@@ -12,6 +13,17 @@ const mix = require('laravel-mix');
  */
 
 mix.js('resources/js/app.js', 'public/js')
-    .postCss("resources/css/app.css", "public/css", [
-        require("tailwindcss"),
+    .postCss('resources/css/app.css', 'public/css', [
+        require('tailwindcss'),
     ]);
+
+let customJsDir = 'resources/js/pages';
+[
+    'register.js',
+].forEach(js => {
+    mix.js(`${customJsDir}/${js}`, 'public/js/pages/');
+    mix.copyDirectory(`public/js/pages/${js}`, `${customJsDir}/min/${js}`)
+        .then(function() {
+            fs.unlinkSync(`public/js/pages/${js}`);
+        });
+});
