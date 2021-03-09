@@ -9,6 +9,10 @@
      window.axios.defaults.headers.common['Authorization'] = `Bearer ${document.querySelector('meta[name="token"]').content}`;
  }
 
+ try {
+     window.$ = window.jQuery = require('jquery');
+ } catch (e) {}
+
  window.Swal = require('sweetalert2');
 
 require('./utils');

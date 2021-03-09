@@ -29,5 +29,5 @@ Route::get('logout', [App\Http\Controllers\AuthController::class, 'logout']);
  
 // routes for authenticated
 Route::group(['middleware' => [ 'auth.passport', ]], function() {
-    Route::get('users', [App\Http\Controllers\UserController::class, 'index']);
+    Route::get('users', [App\Http\Controllers\UserController::class, 'index_users_list']);
 });

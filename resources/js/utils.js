@@ -13,3 +13,30 @@ window.buildErrorMessage = (errorResponse) => {
     }
     return msg;
 }
+
+window.preloadElement = (_element, toShow=true, loaderID='#loader') => {
+    const _loader = document.querySelector(loaderID);
+    if( toShow ) {
+        _loader.addClass('hidden');
+        _element.removeClass('hidden');
+    }
+    else {
+        _element.addClass('hidden');
+        _loader.removeClass('hidden');
+    }
+}
+
+Element.prototype.addClass = function (classToAdd) {
+    const classes = this.className.split(' ');
+    if (classes.indexOf(classToAdd) === -1) classes.push(classToAdd);
+    this.className = classes.join(' ');
+}
+
+Element.prototype.removeClass = function (classToRemove) {
+    const classes = this.className.split(' ');
+    const idx =classes.indexOf(classToRemove);
+    if (idx !== -1) {
+        classes.splice(idx,1);
+    }
+    this.className = classes.join(' ');
+}

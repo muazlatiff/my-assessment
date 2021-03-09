@@ -31189,6 +31189,15 @@ body {
   text-decoration: underline;
 }
 
+.container {
+  min-height: 95vh;
+}
+
+#loader svg {
+  width: 70px;
+  height: 70px;
+}
+
 @media (min-width: 640px) {
   .sm\:container {
     width: 100%;

@@ -44,6 +44,7 @@ class AuthController extends Controller
  
         if (auth()->attempt($credentials)) {
             $token = auth()->user()->createToken('Login')->accessToken;
+            session(['access_token' => $request->token]);
             return response()->json([
                 'token' => $token,
             ], 200);
