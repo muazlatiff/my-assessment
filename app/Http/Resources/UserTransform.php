@@ -36,4 +36,16 @@ class UserTransform extends ResourceCollection
         return $Users->toArray();
     }
 
+    public function show($Users) {
+        $Users->transform(function($user) {
+            return [
+                'id' => $user->id,
+                'name' => $user->name,
+                'email' => $user->email,
+            ];
+        });
+
+        return $Users->count() ? $Users[0] : NULL;
+    }
+
 }

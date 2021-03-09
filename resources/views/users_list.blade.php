@@ -174,7 +174,7 @@
       <div id="modal-add-user" class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full transition ease-out duration-300 hidden"
       role="dialog" aria-modal="true" aria-labelledby="modal-headline">
         <div class="flex justify-between border-double border-4 border-light-blue-500">
-          <div class="p-3">
+          <div id="title-add-user" class="p-3">
             Add a User
           </div>
           <div>
@@ -195,10 +195,38 @@
         </div>
 
         <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+          <form class="mt-8 space-y-6" id="form-add-user" method="" action="">
+            <div class="rounded-md shadow-sm -space-y-px">
+              <div>
+                <label for="name" class="sr-only">Name</label>
+                <input id="name" name="name" type="text"
+                  class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                  placeholder="Name">
+              </div>
+
+              <div>
+                <label for="email-address" class="sr-only">Email address</label>
+                <input id="email-address" name="email" type="email" autocomplete="email"
+                  class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                  placeholder="Email address">
+              </div>
+
+              <div>
+                <label for="password" class="sr-only">Password</label>
+                <input id="password" name="password" type="password" autocomplete="current-password"
+                  class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                  placeholder="Password">
+              </div>
+            </div>
+
+            <div>
+              <button id="submit-add-user" type="submit" class="p-5 hidden"></button>
+            </div>
+          </form>
         </div>
 
         <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-          <button type="button" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:ml-3 sm:w-auto sm:text-sm">
+          <button id="btn-add-user" type="button" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:ml-3 sm:w-auto sm:text-sm">
             Add
           </button>
         </div>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use App\Http\Controllers\AuthController;
 use App\Http\Resources\UserTransform;
 
 class UserController extends Controller
@@ -45,7 +46,7 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return (new AuthController)->register($request);
     }
 
     /**
@@ -56,7 +57,12 @@ class UserController extends Controller
      */
     public function show(Request $request, $id)
     {
-        //
+        $details = $this->transformer->show( User::where('id', $id)->get() );
+        return $details ?
+            $details :
+            response()->json([
+                'message' => 'User not found.',
+            ], 422);
     }
 
     /**
@@ -79,7 +85,21 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $filled = collect( request()->all() )->filter(function($value) {
+            return $value;
+        })->toArray();
+
+        try {
+            $trx = User::where('id', $id)->update($filled);
+        }
+        catch(\Exception $e) {
+            $trx = response()->json([
+                'exception' => $e,
+                'message' => 'Input contains invalid value.',
+            ], 422);
+        }
+
+        return $trx;
     }
 
     /**
@@ -90,7 +110,17 @@ class UserController extends Controller
      */
     public function destroy(Request $request, $id)
     {
-        //
+        try {
+            $trx = User::where('id', $id)->delete();
+        }
+        catch(\Exception $e) {
+            $trx = response()->json([
+                'exception' => $e,
+                'message' => 'Something went wrong.',
+            ], 422);
+        }
+
+        return $trx;
     }
 
     /**
