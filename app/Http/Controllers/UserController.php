@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Imports\UsersImport;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Controllers\AuthController;
@@ -131,6 +132,72 @@ class UserController extends Controller
         }
 
         return $trx;
+    }
+
+    /**
+     * Handle Excel import
+     */
+    public function excelImport(Request $request)
+    {
+        $proceed = false;
+        $msg = 'Invalid format. Make sure 1st row is a Heading. Make sure Heading `name` and `email` exist. Make sure Heading `password` exists for action Add';
+
+        $allRows = (new UsersImport)->toArray(request()->file('excel'))[0];
+        $colIndex = [];
+        $firstRow = $allRows[0];
+
+        // find column location
+        foreach ($firstRow as $index => $col) {
+            if( strtolower($col) === 'name' ) {
+                $colIndex['name'] = $index; 
+            }
+            else if( strtolower($col) === 'email' ) {
+                $colIndex['email'] = $index; 
+            }
+            else if( strtolower($col) === 'password' ) {
+                $colIndex['password'] = $index; 
+            }
+        }
+
+        if( count($colIndex) ) {
+            try {
+                // use column location to fill data
+                foreach ($allRows as $row) {
+                    $fill = [
+                        'name' => $row[$colIndex['name']],
+                        'email' => $row[$colIndex['email']],
+                    ];
+                    if( isset($colIndex['password']) ) {
+                        $fill['password'] = Hash::make($row[$colIndex['password']]);
+                    }
+
+                    switch($request->action) {
+                        case 'store':
+                            $trx = User::create($fill);
+                        break;
+                        case 'update':
+                            $trx = User::where('email', $fill['email'])->update($fill);
+                        break;
+                        case 'destroy':
+                            $trx = User::where('email', $fill['email'])->delete();
+                        break;
+                        default: break;
+                    }
+                }
+
+                $proceed = true;
+                $msg = 'Succeed.';
+            }
+            catch(\Exception $e) {
+                // handle error
+            }
+        }
+
+        return response()->json([
+            'debug' => $colIndex,
+            'debug2' => $allRows[1][$colIndex['email']],
+            'message' => $msg,
+        ], $proceed ? 200 : 422);
     }
 
     /**

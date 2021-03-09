@@ -19,4 +19,5 @@ Route::post('register', [App\Http\Controllers\AuthController::class, 'register']
  
 Route::group(['middleware' => [ 'auth:api', ]], function() {
     Route::resource('users', 'App\Http\Controllers\UserController');
+    Route::post('excel_import', [App\Http\Controllers\UserController::class, 'excelImport']);
 });

@@ -28,6 +28,6 @@ let customJsDir = 'resources/js/pages';
     mix.copyDirectory(`public/js/pages/${js}`, `${customJsDir}/min/${js}`)
         .then(function() {
             // comment this when npm run watch
-            // fs.unlinkSync(`public/js/pages/${js}`);
+            fs.unlinkSync(`public/js/pages/${js}`);
         });
 });

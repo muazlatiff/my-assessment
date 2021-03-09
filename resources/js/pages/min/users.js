@@ -183,6 +183,35 @@ $(document).on('click', '#users-list a[data-delete]', function () {
   var user_id = $(this).attr('data-delete');
   deleteUser(user_id);
 });
+/**
+ * EXCEL
+ */
+
+var submitExcelImport = function submitExcelImport() {
+  var formData = new FormData();
+  formData.append('action', $('input[name="action"]:checked').val());
+  formData.append('excel', $('#input-excel-import')[0].files[0]);
+  axios.post($('#form-excel-import').attr('action'), formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data'
+    }
+  }).then(function (response) {
+    Swal.fire({
+      icon: 'success',
+      title: "Successfully imported excel with action"
+    }).then(function () {
+      fetchUser();
+      $('#form-excel-import').trigger('reset');
+      $('#modal-close-excel-import').trigger('click');
+    });
+  })["catch"](function (err) {
+    Swal.fire({
+      icon: 'error',
+      title: "Import excel with action Failed",
+      html: buildErrorMessage(err.response.data)
+    });
+  });
+};
 
 var onExcelSelected = function onExcelSelected(file) {
   var reader = new FileReader();
@@ -225,7 +254,7 @@ $(document).on('click', '#btn-excel-import', function () {
 });
 $(document).on('submit', '#form-excel-import', function (e) {
   e.preventDefault();
-  console.log('todo');
+  submitExcelImport();
 });
 $(document).ready(function () {
   fetchUser();

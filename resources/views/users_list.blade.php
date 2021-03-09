@@ -282,10 +282,10 @@
           </div>
 
           <div class="p-3 flex justify-center">
-            <label for="toogleA" class="p-2 flex items-center cursor-pointer">
+            <label for="action-add-excel-import" class="p-2 flex items-center cursor-pointer">
               <!-- toggle -->
               <div class="relative">
-                <input id="toogleA" type="radio" class="hidden" name="action" value="store" />
+                <input id="action-add-excel-import" type="radio" class="hidden" name="action" value="store" checked />
                 <div class="toggle__line w-10 h-4 bg-gray-400 rounded-full shadow-inner"></div>
                 <div class="toggle__dot absolute w-6 h-6 bg-white rounded-full shadow inset-y-0 left-0"></div>
               </div>
@@ -293,10 +293,10 @@
               <div class="ml-3 text-gray-700 font-medium">Add</div>
             </label>
 
-            <label for="toogleB" class="p-2 flex items-center cursor-pointer">
+            <label for="action-update-excel-import" class="p-2 flex items-center cursor-pointer">
               <!-- toggle -->
               <div class="relative">
-                <input id="toogleB" type="radio" class="hidden" name="action" value="update" />
+                <input id="action-update-excel-import" type="radio" class="hidden" name="action" value="update" />
                 <div class="toggle__line w-10 h-4 bg-gray-400 rounded-full shadow-inner"></div>
                 <div class="toggle__dot absolute w-6 h-6 bg-white rounded-full shadow inset-y-0 left-0"></div>
               </div>
@@ -304,10 +304,10 @@
               <div class="ml-3 text-gray-700 font-medium">Edit</div>
             </label>
 
-            <label for="toogleC" class="p-2 flex items-center cursor-pointer">
+            <label for="action-destroy-excel-import" class="p-2 flex items-center cursor-pointer">
               <!-- toggle -->
               <div class="relative">
-                <input id="toogleC" type="radio" class="hidden" name="action" value="destroy" />
+                <input id="action-destroy-excel-import" type="radio" class="hidden" name="action" value="destroy" />
                 <div class="toggle__line w-10 h-4 bg-gray-400 rounded-full shadow-inner"></div>
                 <div class="toggle__dot absolute w-6 h-6 bg-white rounded-full shadow inset-y-0 left-0"></div>
               </div>
@@ -316,7 +316,7 @@
             </label>
           </div>
 
-          <form id="form-excel-import" action="" method="POST">
+          <form id="form-excel-import" method="POST" action="{{ url('api/excel_import') }}">
             <button id="reset-excel-import" type="button" class="ml-5 bg-white py-2 px-3 border border-gray-300 rounded-md shadow-sm text-sm leading-4 font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 hidden">
               Again
             </button>
