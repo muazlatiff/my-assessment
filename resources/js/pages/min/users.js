@@ -183,6 +183,52 @@ $(document).on('click', '#users-list a[data-delete]', function () {
   var user_id = $(this).attr('data-delete');
   deleteUser(user_id);
 });
-fetchUser();
+
+var onExcelSelected = function onExcelSelected(file) {
+  var reader = new FileReader();
+  $('#no-excel-import').addClass('hidden');
+
+  reader.onload = function (ev) {
+    $('#has-excel-import').html(file.name);
+    $('#has-excel-import').removeClass('hidden');
+    $('#reset-excel-import').removeClass('hidden');
+  };
+
+  reader.readAsDataURL(file);
+}; // select file for excel import
+
+
+$('#input-excel-import').on('change', function (e) {
+  e.preventDefault();
+  onExcelSelected(e.target.files[0]);
+});
+
+$('#holder-excel-import')[0].ondragover = function () {
+  $(this).addClass('hover');
+  return false;
+};
+
+$('#holder-excel-import')[0].ondrop = function (e) {
+  e.preventDefault();
+  onExcelSelected(e.dataTransfer.files[0]);
+};
+
+$(document).on('click', '#reset-excel-import', function () {
+  $('#form-excel-import').trigger('reset');
+  $('#no-excel-import').removeClass('hidden');
+  $('#has-excel-import').addClass('hidden');
+  $('#reset-excel-import').addClass('hidden');
+}); // submit excel import
+
+$(document).on('click', '#btn-excel-import', function () {
+  $('#submit-excel-import').trigger('click');
+});
+$(document).on('submit', '#form-excel-import', function (e) {
+  e.preventDefault();
+  console.log('todo');
+});
+$(document).ready(function () {
+  fetchUser();
+});
 /******/ })()
 ;

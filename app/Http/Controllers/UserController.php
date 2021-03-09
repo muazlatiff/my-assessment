@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use App\Http\Controllers\AuthController;
 use App\Http\Resources\UserTransform;
 
@@ -85,9 +86,18 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $this->validate($request, [
+            'name' => 'required|min:3',
+            'email' => 'required|email',
+            'password' => 'sometimes|nullable|min:8',
+        ]);
+
         $filled = collect( request()->all() )->filter(function($value) {
             return $value;
         })->toArray();
+        if( isset($filled['password']) ) {
+            $filled['password'] = Hash::make($filled['password']);
+        }
 
         try {
             $trx = User::where('id', $id)->update($filled);

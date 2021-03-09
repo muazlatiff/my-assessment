@@ -219,9 +219,7 @@
               </div>
             </div>
 
-            <div>
-              <button id="submit-add-user" type="submit" class="p-5 hidden"></button>
-            </div>
+            <button id="submit-add-user" type="submit" class="p-5 hidden"></button>
           </form>
         </div>
 
@@ -267,10 +265,91 @@
         </div>
 
         <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+          <div class="flex flex-col align-center text-center ">
+            <h3><b><u>IMPORTANT</u></b></h3>
+            <p><b>The excel must be in format:</b></p>
+            <ul class="pl-5">
+              <li><small>- 1st Row is Heading column.</small></li>
+              <li>
+                <small>- Heading column must contains column name</small>
+                <code>name</code>, <code>email</code>, <code>password</code>.
+              </li>
+              <li>
+                <small>- Column name</small> <code>password</code>
+                <small>is optional for update & delete.</small>
+              </li>
+            </ul>
+          </div>
+
+          <div class="p-3 flex justify-center">
+            <label for="toogleA" class="p-2 flex items-center cursor-pointer">
+              <!-- toggle -->
+              <div class="relative">
+                <input id="toogleA" type="radio" class="hidden" name="action" value="store" />
+                <div class="toggle__line w-10 h-4 bg-gray-400 rounded-full shadow-inner"></div>
+                <div class="toggle__dot absolute w-6 h-6 bg-white rounded-full shadow inset-y-0 left-0"></div>
+              </div>
+              <!-- label -->
+              <div class="ml-3 text-gray-700 font-medium">Add</div>
+            </label>
+
+            <label for="toogleB" class="p-2 flex items-center cursor-pointer">
+              <!-- toggle -->
+              <div class="relative">
+                <input id="toogleB" type="radio" class="hidden" name="action" value="update" />
+                <div class="toggle__line w-10 h-4 bg-gray-400 rounded-full shadow-inner"></div>
+                <div class="toggle__dot absolute w-6 h-6 bg-white rounded-full shadow inset-y-0 left-0"></div>
+              </div>
+              <!-- label -->
+              <div class="ml-3 text-gray-700 font-medium">Edit</div>
+            </label>
+
+            <label for="toogleC" class="p-2 flex items-center cursor-pointer">
+              <!-- toggle -->
+              <div class="relative">
+                <input id="toogleC" type="radio" class="hidden" name="action" value="destroy" />
+                <div class="toggle__line w-10 h-4 bg-gray-400 rounded-full shadow-inner"></div>
+                <div class="toggle__dot absolute w-6 h-6 bg-white rounded-full shadow inset-y-0 left-0"></div>
+              </div>
+              <!-- label -->
+              <div class="ml-3 text-gray-700 font-medium">Delete</div>
+            </label>
+          </div>
+
+          <form id="form-excel-import" action="" method="POST">
+            <button id="reset-excel-import" type="button" class="ml-5 bg-white py-2 px-3 border border-gray-300 rounded-md shadow-sm text-sm leading-4 font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 hidden">
+              Again
+            </button>
+            <div class="shadow sm:rounded-md sm:overflow-hidden">
+              <div class="px-4 py-5 bg-white space-y-6 sm:p-6">
+                <div>
+                  <div id="holder-excel-import" class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
+                    <div class="space-y-1 text-center">
+                      <div id="no-excel-import">
+                        <div class="flex text-sm text-gray-600">
+                          <label for="input-excel-import" class="relative cursor-pointer bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500">
+                            <span>Upload excel file</span>
+                            <input id="input-excel-import" name="excel" type="file" class="sr-only" accept=".xlsx,.xls,.csv" required>
+                          </label>
+                          <p class="pl-1">or drag and drop</p>
+                        </div>
+                        <p class="text-xs text-gray-500">
+                          xls, xlsx & csv
+                        </p>
+                      </div>
+                      <p id="has-excel-import" class="text-xs text-gray-500"></p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <button id="submit-excel-import" type="submit" class="p-5 hidden"></button>
+            </div>
+          </form>
         </div>
 
         <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-          <button type="button" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:ml-3 sm:w-auto sm:text-sm">
+          <button id="btn-excel-import" type="button" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:ml-3 sm:w-auto sm:text-sm">
             Proceed
           </button>
         </div>
