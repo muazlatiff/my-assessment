@@ -7,6 +7,10 @@
 
   <title>{{ env('APP_NAME') }} - Muaz</title>
   <meta name="app-url" content="{{ env('APP_URL') }}" />
+
+  @if( session('access_token') )
+  <meta name="token" content="{{ session('access_token') }}" />
+  @endif
 </head>
 
 <body>
@@ -16,7 +20,7 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="lg:text-center">
         <p class="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl">
-          Back-end
+          Back-end : {{ auth()->guard('api')->user() ? 'Authenticated' : '' }}
         </p>
       </div>
 
@@ -25,7 +29,7 @@
       <div class="mt-10">
         <dl class="space-y-10 md:space-y-0 md:grid md:grid-cols-1 md:gap-x-8 md:gap-y-10">
           
-          @guest
+          @if( !auth()->guard('api')->user() )
           <div class="flex justify-center navigate">
             <div class="flex-shrink-0">
               <div class="flex items-center justify-center h-12 w-12 rounded-md bg-indigo-500 text-white">
@@ -57,9 +61,8 @@
               </dt>
             </div>
           </div>
-          @endguest
 
-          @auth
+          @else
           <div class="flex justify-center navigate">
             <div class="flex-shrink-0">
               <div class="flex items-center justify-center h-12 w-12 rounded-md bg-indigo-500 text-white">
@@ -69,7 +72,7 @@
                 </svg>
               </div>
             </div>
-            <div class="ml-4 mr-1">
+            <div class="ml-4 mr-2">
               <dt class="text-lg leading-6 font-medium text-gray-900">
                 <a href="{{ url('users') }}">Users</a>
               </dt>
@@ -87,11 +90,11 @@
             </div>
             <div class="ml-4">
               <dt class="text-lg leading-6 font-medium text-gray-900">
-                Logout
+                <a href="{{ url('logout') }}">Logout</a>
               </dt>
             </div>
           </div>
-          @endauth
+          @endif
           
         </dl>
       </div>

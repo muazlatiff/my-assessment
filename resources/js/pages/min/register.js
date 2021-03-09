@@ -23,7 +23,7 @@ formRegister.addEventListener('submit', function (e) {
   })["catch"](function (err) {
     Swal.fire({
       icon: 'error',
-      title: 'Failed to Register',
+      title: 'Register Failed',
       html: buildErrorMessage(err.response.data)
     });
   });

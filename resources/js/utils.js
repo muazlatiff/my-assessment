@@ -1,3 +1,5 @@
+window.APP_URL = document.querySelector('meta[name="app-url"]').content;
+
 window.buildErrorMessage = (errorResponse) => {
     let msg = '';
     if( errorResponse.errors ) {

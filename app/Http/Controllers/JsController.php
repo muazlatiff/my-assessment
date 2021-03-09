@@ -22,7 +22,7 @@ class JsController extends Controller
         // condition to invalid js path
         $proceed = (
             !in_array($jsPath, $js) ||  // when js is not defined
-            ( !auth()->user() && in_array($jsPath, $jsAuth) )   // when a guest requested authenticated js
+            ( !$this->authenticated() && in_array($jsPath, $jsAuth) )   // when a guest requested authenticated js
         ) ? false : true;
 
         if( !$proceed ) abort(404);

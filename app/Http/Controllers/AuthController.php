@@ -50,9 +50,33 @@ class AuthController extends Controller
         }
         else {
             return response()->json([
-                'error' => 'Unauthorized',
+                'message' => 'Invalid credential.',
             ], 401);
         }
+    }
+ 
+    /**
+     * Handles Login redirect 
+     */
+    public function loginRedirect(Request $request)
+    {
+        $proceed = ( $request->filled('token') ) ? true : false;
+        
+        if( $proceed ) {
+            session(['access_token' => $request->token]);
+        }
+
+        return redirect('/');
+    }
+ 
+    /**
+     * Handles Logout
+     */
+    public function logout(Request $request)
+    {
+        session()->flush();
+
+        return redirect('/');
     }
  
     /**
@@ -60,7 +84,7 @@ class AuthController extends Controller
      */
     public function index_login(Request $request)
     {
-        return ( auth()->user() ) ?
+        return ( $this->authenticated() ) ?
             redirect('/') :
             view('login');
     }
@@ -70,7 +94,7 @@ class AuthController extends Controller
      */
     public function index_register(Request $request)
     {
-        return ( auth()->user() ) ?
+        return ( $this->authenticated() ) ?
             redirect('/') :
             view('register');
     }
