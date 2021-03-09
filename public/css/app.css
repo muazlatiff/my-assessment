@@ -31180,6 +31180,35 @@ body {
   font-family: 'Nunito', sans-serif;
 }
 
+.navigate a {
+  color: hsl(250, 50%, 50%);
+}
+
+.navigate a:hover {
+  color: hsl(250, 80%, 25%);
+  text-decoration: underline;
+}
+
+.container {
+  min-height: 95vh;
+}
+
+#loader svg {
+  width: 70px;
+  height: 70px;
+}
+
+.toggle__dot {
+  top: -0.25rem;
+  left: -0.25rem;
+  transition: all 0.3s ease-in-out;
+}
+
+input:checked ~ .toggle__dot {
+  transform: translateX(100%);
+  background-color: #48bb78;
+}
+
 @media (min-width: 640px) {
   .sm\:container {
     width: 100%;
