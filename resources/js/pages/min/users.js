@@ -68,6 +68,7 @@ var showUser = function showUser(url, _callback) {
 };
 
 var deleteUser = function deleteUser(user_id) {
+  preloadElement(_users_list, false);
   axios({
     method: 'DELETE',
     url: "".concat(APP_URL, "/api/users/").concat(user_id),
@@ -78,17 +79,22 @@ var deleteUser = function deleteUser(user_id) {
       title: "Successfully Delete User"
     }).then(function () {
       fetchUser();
+      preloadElement(_users_list, true);
     });
   })["catch"](function (err) {
     Swal.fire({
       icon: 'error',
       title: "Delete User Failed",
       html: buildErrorMessage(err.response.data)
+    }).then(function () {
+      preloadElement(_users_list, true);
     });
   });
 };
 
 var addEditUser = function addEditUser() {
+  preloadElement($('#modal-add-user'), false);
+
   var _method = $('#form-add-user').attr('method');
 
   axios({
@@ -106,12 +112,15 @@ var addEditUser = function addEditUser() {
     }).then(function () {
       fetchUser();
       $('#modal-close-add-user').trigger('click');
+      preloadElement($('#modal-add-user'), true);
     });
   })["catch"](function (err) {
     Swal.fire({
       icon: 'error',
       title: "".concat(_method !== 'PATCH' ? 'Add' : 'Edit', " User Failed"),
       html: buildErrorMessage(err.response.data)
+    }).then(function () {
+      preloadElement($('#modal-add-user'), true);
     });
   });
 };
@@ -182,10 +191,13 @@ $(document).on('click', '#users-list a[data-delete]', function () {
  * EXCEL
  */
 
+var file = null;
+
 var submitExcelImport = function submitExcelImport() {
   var formData = new FormData();
   formData.append('action', $('input[name="action"]:checked').val());
-  formData.append('excel', $('#input-excel-import')[0].files[0]);
+  formData.append('excel', file);
+  preloadElement($('#modal-excel-import'), false);
   axios.post($('#form-excel-import').attr('action'), formData, {
     headers: {
       'Content-Type': 'multipart/form-data'
@@ -199,20 +211,23 @@ var submitExcelImport = function submitExcelImport() {
       $('#reset-excel-import').trigger('click');
       $('#modal-close-excel-import').trigger('click');
     });
+    preloadElement($('#modal-excel-import'), true);
   })["catch"](function (err) {
     Swal.fire({
       icon: 'error',
       title: "Import excel with action Failed",
       html: buildErrorMessage(err.response.data)
     });
+    preloadElement($('#modal-excel-import'), true);
   });
 };
 
-var onExcelSelected = function onExcelSelected(file) {
+var onExcelSelected = function onExcelSelected() {
   var reader = new FileReader();
   $('#no-excel-import').addClass('hidden');
 
   reader.onload = function (ev) {
+    $('#input-excel-import').removeAttr('required');
     $('#has-excel-import').html(file.name);
     $('#has-excel-import').removeClass('hidden');
     $('#reset-excel-import').removeClass('hidden');
@@ -224,7 +239,8 @@ var onExcelSelected = function onExcelSelected(file) {
 
 $('#input-excel-import').on('change', function (e) {
   e.preventDefault();
-  onExcelSelected(e.target.files[0]);
+  file = e.target.files[0];
+  onExcelSelected();
 });
 
 $('#holder-excel-import')[0].ondragover = function () {
@@ -234,10 +250,12 @@ $('#holder-excel-import')[0].ondragover = function () {
 
 $('#holder-excel-import')[0].ondrop = function (e) {
   e.preventDefault();
-  onExcelSelected(e.dataTransfer.files[0]);
+  file = e.dataTransfer.files[0];
+  onExcelSelected();
 };
 
 $(document).on('click', '#reset-excel-import', function () {
+  $('#input-excel-import').attr('required', true);
   $('#form-excel-import').trigger('reset');
   $('#no-excel-import').removeClass('hidden');
   $('#has-excel-import').addClass('hidden');
