@@ -160,14 +160,18 @@ class UserController extends Controller
         }
 
         if( count($colIndex) ) {
+            array_shift($allRows);
             try {
                 // use column location to fill data
                 foreach ($allRows as $row) {
-                    $fill = [
-                        'name' => $row[$colIndex['name']],
-                        'email' => $row[$colIndex['email']],
-                    ];
-                    if( isset($colIndex['password']) ) {
+                    $fill = [];
+                    if( trim($row[$colIndex['name']]) ) {
+                        $fill['name'] = $row[$colIndex['name']];
+                    }
+                    if( trim($row[$colIndex['email']]) ) {
+                        $fill['email'] = $row[$colIndex['email']];
+                    }
+                    if( isset($colIndex['password']) && trim($row[$colIndex['password']]) ) {
                         $fill['password'] = Hash::make($row[$colIndex['password']]);
                     }
 
@@ -190,6 +194,12 @@ class UserController extends Controller
             }
             catch(\Exception $e) {
                 // handle error
+                // $msg = $e->getMessage();
+                if( strpos($e->getMessage(), 'Duplicate entry') ) {
+                    if (preg_match("/Duplicate entry '(.*?)' for key/", $e->getMessage(), $match) === 1) {
+                        $msg = 'Cannot accept this file, email address <b class="text-red-600">'.$match[1].'</b> is taken.';
+                    }
+                }
             }
         }
 

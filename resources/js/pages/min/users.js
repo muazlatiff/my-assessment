@@ -6,10 +6,8 @@ var __webpack_exports__ = {};
 var _users_list = document.querySelector('#users-list');
 
 var buildPagination = function buildPagination(currentPage, curIndex, last) {
-  $(_users_list).find('.paging-nav').remove();
-
   if (last <= 8 || curIndex < 2) {
-    return "<a href=\"javascript:\" class=\"relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 paging-nav\" data-page=\"".concat(curIndex + 1, "\">\n            ").concat(curIndex + 1, "\n        </a>");
+    return "<a href=\"javascript:\" class=\"relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium text-gray-700 hover:bg-gray-50 paging-nav\" data-page=\"".concat(curIndex + 1, "\">\n            ").concat(curIndex + 1, "\n        </a>");
   }
 
   if (last > 8 && (curIndex === 2 || curIndex === 5)) {
@@ -18,11 +16,11 @@ var buildPagination = function buildPagination(currentPage, curIndex, last) {
 
   if (last > 8 && curIndex === 3) {
     var median = Math.floor(last / 2);
-    return "<a href=\"javascript:\" class=\"relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 paging-nav\" data-page=\"".concat(curIndex + 1, "\">\n            ").concat(median, "\n        </a>\n        <a href=\"javascript:\" class=\"relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 paging-nav\" data-page=\"").concat(curIndex + 1, "\">\n            ").concat(median + 1, "\n        </a>");
+    return "<a href=\"javascript:\" class=\"relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium text-gray-700 hover:bg-gray-50 paging-nav\" data-page=\"".concat(curIndex + 1, "\">\n            ").concat(median, "\n        </a>\n        <a href=\"javascript:\" class=\"relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium text-gray-700 hover:bg-gray-50 paging-nav\" data-page=\"").concat(curIndex + 1, "\">\n            ").concat(median + 1, "\n        </a>");
   }
 
   if (last > 8 && curIndex === 6) {
-    return "<a href=\"javascript:\" class=\"relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 paging-nav\" data-page=\"".concat(curIndex + 1, "\">\n            ").concat(last - 1, "\n        </a>\n        <a href=\"javascript:\" class=\"relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 paging-nav\" data-page=\"").concat(curIndex + 1, "\">\n            ").concat(last, "\n        </a>");
+    return "<a href=\"javascript:\" class=\"relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium text-gray-700 hover:bg-gray-50 paging-nav\" data-page=\"".concat(curIndex + 1, "\">\n            ").concat(last - 1, "\n        </a>\n        <a href=\"javascript:\" class=\"relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium text-gray-700 hover:bg-gray-50 paging-nav\" data-page=\"").concat(curIndex + 1, "\">\n            ").concat(last, "\n        </a>");
   }
 
   return null;
@@ -34,17 +32,15 @@ var fetchUser = function fetchUser() {
   preloadElement(_users_list, false);
   axios({
     method: 'GET',
-    url: "".concat(APP_URL, "/api/users"),
-    data: {
-      page: currentPage,
-      perPage: perPage
-    }
+    url: "".concat(APP_URL, "/api/users?page=").concat(currentPage, "&perPage=").concat(perPage)
   }).then(function (response) {
+    $(_users_list).find('.paging-nav').remove();
     var last_page = response.data.last_page;
     var iteratePagingNav = last_page <= 8 ? last_page : 8;
     Array.from(Array(iteratePagingNav).keys()).reverse().forEach(function (i) {
-      _users_list.querySelector('.paging-prev.before-nav').insertAdjacentHTML('afterend', buildPagination(currentPage, i, last_page));
+      _users_list.querySelector('.paging-prev.before-nav').insertAdjacentHTML('afterend', buildPagination(currentPage, i, response.data.last_page));
     });
+    $(_users_list).find(".paging-nav[data-page=\"".concat(response.data.current_page, "\"]")).addClass('bg-blue-100');
     $(_users_list).find('.paging-prev').attr('data-page', response.data.current_page > 1 ? response.data.current_page - 1 : 1);
     $(_users_list).find('.paging-next').attr('data-page', response.data.current_page < response.data.last_page ? response.data.current_page + 1 : response.data.last_page);
     _users_list.querySelector('.paging-from').innerHTML = response.data.from;
@@ -52,7 +48,7 @@ var fetchUser = function fetchUser() {
     _users_list.querySelector('.paging-total').innerHTML = response.data.total;
     _users_list.querySelector('tbody').innerHTML = '';
     response.data.data.forEach(function (user) {
-      _users_list.querySelector('tbody').innerHTML += "<tr>\n                        <td class=\"px-6 py-4 whitespace-nowrap\">\n                            <div class=\"text-sm font-medium text-gray-900\">".concat(user.name, "</div>\n                        </td>\n                        <td class=\"px-6 py-4 whitespace-nowrap\">\n                            <div class=\"text-sm font-medium text-gray-900\">").concat(user.email, "</div>\n                        </td>\n                        <td class=\"px-6 py-4 whitespace-nowrap text-right text-sm font-medium\">\n                            <a href=\"javascript:\" class=\"text-indigo-600 hover:text-indigo-900\" data-edit=\"").concat(user.id, "\">\n                                Edit\n                            </a>\n                            <a href=\"javascript:\" class=\"text-red-600 hover:text-red-900 ml-2\" ").concat(!user.me ? "data-delete=\"".concat(user.id, "\"") : '', ">\n                                ").concat(!user.me ? 'Delete' : '', "\n                            </a>\n                        </td>\n                    </tr>");
+      _users_list.querySelector('tbody').innerHTML += "<tr>\n                        <td class=\"px-6 py-4 whitespace-nowrap\">\n                            <div class=\"text-sm font-medium text-gray-900\">".concat(user.name, "</div>\n                        </td>\n                        <td class=\"px-6 py-4 whitespace-nowrap\">\n                            <div class=\"text-sm font-medium text-gray-900\">").concat(user.email, "</div>\n                        </td>\n                        <td class=\"px-6 py-4 whitespace-nowrap text-right text-sm font-medium\">\n                            <a href=\"javascript:\" class=\"text-indigo-600 hover:text-indigo-900\" data-edit=\"").concat(user.id, "\">\n                                Edit\n                            </a>\n                            ").concat(!user.me ? "<a href=\"javascript:\" class=\"text-red-600 hover:text-red-900 ml-2\" data-delete=\"".concat(user.id, "\">\n                                    Delete\n                                </a>") : '<span class="text-green-900 ml-2">Myself</span>', "\n                        </td>\n                    </tr>");
     });
     preloadElement(_users_list, true);
   });
@@ -61,8 +57,7 @@ var fetchUser = function fetchUser() {
 var showUser = function showUser(url, _callback) {
   axios({
     method: 'GET',
-    url: url,
-    data: {}
+    url: url
   }).then(function (response) {
     $('#form-add-user').find('[name="name"]').val(response.data.name);
     $('#form-add-user').find('[name="email"]').val(response.data.email);
@@ -201,7 +196,7 @@ var submitExcelImport = function submitExcelImport() {
       title: "Successfully imported excel with action"
     }).then(function () {
       fetchUser();
-      $('#form-excel-import').trigger('reset');
+      $('#reset-excel-import').trigger('click');
       $('#modal-close-excel-import').trigger('click');
     });
   })["catch"](function (err) {
@@ -255,6 +250,19 @@ $(document).on('click', '#btn-excel-import', function () {
 $(document).on('submit', '#form-excel-import', function (e) {
   e.preventDefault();
   submitExcelImport();
+});
+/**
+ * NAVIGATE PAGINATION
+ */
+
+$(document).on('click', '.paging-prev', function () {
+  fetchUser($(this).attr('data-page'));
+});
+$(document).on('click', '.paging-next', function () {
+  fetchUser($(this).attr('data-page'));
+});
+$(document).on('click', '.paging-nav', function () {
+  fetchUser($(this).attr('data-page'));
 });
 $(document).ready(function () {
   fetchUser();

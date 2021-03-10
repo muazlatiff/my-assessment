@@ -15,7 +15,10 @@ formRegister.addEventListener('submit', function(e) {
             Swal.fire({
                 icon: 'success',
                 title: 'Successfully Registered',
-                html: 'You can now login.',
+                html: `<p>You can now login.</p>
+                    <p class="navigate"><a href="${APP_URL}/login">Go to Login</a></p>`,
+            }).then(function() {
+                $(formRegister).trigger('reset');
             });
         })
         .catch(function (err) {
