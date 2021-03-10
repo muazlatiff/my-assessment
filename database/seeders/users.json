@@ -1,0 +1,68 @@
+[
+  {
+    "id": 1,
+    "name": "test",
+    "password": "test",
+    "email": "test@mail.com"
+  },
+  {
+    "id": 2,
+    "name": "Ervin Howell",
+    "password": "default123",
+    "email": "Shanna@melissa.tv"
+  },
+  {
+    "id": 3,
+    "name": "Clementine Bauch",
+    "password": "default123",
+    "email": "Nathan@yesenia.net"
+  },
+  {
+    "id": 4,
+    "name": "Patricia Lebsack",
+    "password": "default123",
+    "email": "Julianne.OConner@kory.org"
+  },
+  {
+    "id": 5,
+    "name": "Chelsey Dietrich",
+    "password": "default123",
+    "email": "Lucio_Hettinger@annie.ca"
+  },
+  {
+    "id": 6,
+    "name": "Mrs. Dennis Schulist",
+    "password": "default123",
+    "email": "Karley_Dach@jasper.info"
+  },
+  {
+    "id": 7,
+    "name": "Kurtis Weissnat",
+    "password": "default123",
+    "email": "Telly.Hoeger@billy.biz"
+  },
+  {
+    "id": 8,
+    "name": "Nicholas Runolfsdottir V",
+    "password": "default123",
+    "email": "Sherwood@rosamond.me"
+  },
+  {
+    "id": 9,
+    "name": "Glenna Reichert",
+    "password": "default123",
+    "email": "Chaim_McDermott@dana.io"
+  },
+  {
+    "id": 10,
+    "name": "Clementina DuBuque",
+    "password": "default123",
+    "email": "Rey.Padberg@karina.biz"
+  },
+  {
+    "id": 11,
+    "name": "Leanne Graham",
+    "password": "default123",
+    "email": "Sincere@april.biz"
+  }
+]

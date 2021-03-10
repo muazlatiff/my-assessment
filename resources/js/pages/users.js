@@ -1,10 +1,8 @@
 const _users_list = document.querySelector('#users-list');
 
 const buildPagination = (currentPage, curIndex, last) => {
-    $(_users_list).find('.paging-nav').remove();
-
     if( last <= 8 || curIndex < 2 ) {
-        return `<a href="javascript:" class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 paging-nav" data-page="${curIndex+1}">
+        return `<a href="javascript:" class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium text-gray-700 hover:bg-gray-50 paging-nav" data-page="${curIndex+1}">
             ${curIndex+1}
         </a>`;
     }
@@ -15,18 +13,18 @@ const buildPagination = (currentPage, curIndex, last) => {
     }
     if( last > 8 && curIndex === 3 ) {
         let median = Math.floor(last/2);
-        return `<a href="javascript:" class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 paging-nav" data-page="${curIndex+1}">
+        return `<a href="javascript:" class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium text-gray-700 hover:bg-gray-50 paging-nav" data-page="${curIndex+1}">
             ${median}
         </a>
-        <a href="javascript:" class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 paging-nav" data-page="${curIndex+1}">
+        <a href="javascript:" class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium text-gray-700 hover:bg-gray-50 paging-nav" data-page="${curIndex+1}">
             ${median+1}
         </a>`;
     }
     if( last > 8 && curIndex === 6 ) {
-        return `<a href="javascript:" class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 paging-nav" data-page="${curIndex+1}">
+        return `<a href="javascript:" class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium text-gray-700 hover:bg-gray-50 paging-nav" data-page="${curIndex+1}">
             ${last-1}
         </a>
-        <a href="javascript:" class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 paging-nav" data-page="${curIndex+1}">
+        <a href="javascript:" class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium text-gray-700 hover:bg-gray-50 paging-nav" data-page="${curIndex+1}">
             ${last}
         </a>`;
     }
@@ -39,19 +37,17 @@ const fetchUser = (currentPage=1, perPage=10) => {
 
     axios({
         method: 'GET',
-        url: `${APP_URL}/api/users`,
-        data: {
-            page: currentPage,
-            perPage: perPage,
-        },
+        url: `${APP_URL}/api/users?page=${currentPage}&perPage=${perPage}`,
       })
         .then(function (response) {
+            $(_users_list).find('.paging-nav').remove();
             const last_page = response.data.last_page;
-            const iteratePagingNav = last_page <=8 ? last_page : 8;
+            const iteratePagingNav = last_page <= 8 ? last_page : 8;
             Array.from(Array(iteratePagingNav).keys()).reverse().forEach(function(i) {
-                _users_list.querySelector('.paging-prev.before-nav').insertAdjacentHTML('afterend', buildPagination(currentPage, i, last_page));
+                _users_list.querySelector('.paging-prev.before-nav').insertAdjacentHTML('afterend', buildPagination(currentPage, i, response.data.last_page));
             });
             
+            $(_users_list).find(`.paging-nav[data-page="${response.data.current_page}"]`).addClass('bg-blue-100');
             $(_users_list).find('.paging-prev').attr(
                 'data-page',
                 response.data.current_page > 1 ? response.data.current_page - 1 : 1
@@ -79,9 +75,11 @@ const fetchUser = (currentPage=1, perPage=10) => {
                             <a href="javascript:" class="text-indigo-600 hover:text-indigo-900" data-edit="${user.id}">
                                 Edit
                             </a>
-                            <a href="javascript:" class="text-red-600 hover:text-red-900 ml-2" ${!user.me ? `data-delete="${user.id}"` : ''}>
-                                ${!user.me ? 'Delete' : ''}
-                            </a>
+                            ${!user.me ? 
+                                `<a href="javascript:" class="text-red-600 hover:text-red-900 ml-2" data-delete="${user.id}">
+                                    Delete
+                                </a>` :
+                                '<span class="text-green-900 ml-2">Myself</span>'}
                         </td>
                     </tr>`;
             });
@@ -94,8 +92,6 @@ const showUser = (url, _callback) => {
     axios({
         method: 'GET',
         url: url,
-        data: {
-        },
       })
         .then(function (response) {
             $('#form-add-user').find('[name="name"]').val(response.data.name);
@@ -243,7 +239,7 @@ const submitExcelImport = () => {
                 title: `Successfully imported excel with action`,
             }).then(function() {
                 fetchUser();
-                $('#form-excel-import').trigger('reset');
+                $('#reset-excel-import').trigger('click');
                 $('#modal-close-excel-import').trigger('click');
             });
         })
@@ -294,6 +290,19 @@ $(document).on('click', '#btn-excel-import', function() {
 $(document).on('submit', '#form-excel-import', function(e) {
     e.preventDefault();
     submitExcelImport();
+});
+
+/**
+ * NAVIGATE PAGINATION
+ */
+$(document).on('click', '.paging-prev', function() {
+    fetchUser( $(this).attr('data-page') );
+});
+$(document).on('click', '.paging-next', function() {
+    fetchUser( $(this).attr('data-page') );
+});
+$(document).on('click', '.paging-nav', function() {
+    fetchUser( $(this).attr('data-page') );
 });
 
 $(document).ready(function() {

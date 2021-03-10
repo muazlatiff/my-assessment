@@ -1,5 +1,26 @@
 # My Assessment
 
+#### After fresh Clone
+1. Configure ```.env``` for your environment.
+
+2. Install required packages:
+```bash
+composer install
+```
+
+3. Run these in this order:
+```bash
+php artisan key:generate
+php artisan passport:install
+php artisan migrate
+php artisan db:seed
+php artisan serve
+```
+
+4. Preview on ```http://localhost:8000```
+
+5. Excel test file is in ```/storage/users.xlsx```
+
 <hr>
 
 ## Back-end
