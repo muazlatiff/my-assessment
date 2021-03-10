@@ -18,6 +18,10 @@ Route::get('/', function () {
     // return view('welcome');
 });
 
+Route::get('gorest', function () {
+    return view('gorest');
+});
+
 Route::get('custom-js/{jsPath}', [App\Http\Controllers\JsController::class, 'index'])->name('custom-js');
 Route::get('register', [App\Http\Controllers\AuthController::class, 'index_register']);
 Route::get('login', [App\Http\Controllers\AuthController::class, 'index_login']);

@@ -17,7 +17,7 @@
 
   <!-- This example requires Tailwind CSS v2.0+ -->
   <div class="py-12 bg-white">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="mb-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="lg:text-center">
         <p class="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl">
           Back-end : {{ auth()->guard('api')->user() ? 'Authenticated' : '' }}
@@ -39,7 +39,7 @@
                 </svg>
               </div>
             </div>
-            <div class="ml-4">
+            <div class="ml-4 flex items-center">
               <dt class="text-lg leading-6 font-medium text-gray-900">
                 <a href="{{ url('register') }}">Register</a>
               </dt>
@@ -55,7 +55,7 @@
                 </svg>
               </div>
             </div>
-            <div class="ml-4 mr-3">
+            <div class="ml-4 mr-4 flex items-center">
               <dt class="text-lg leading-6 font-medium text-gray-900">
                 <a href="{{ url('login') }}">Login</a>
               </dt>
@@ -72,7 +72,7 @@
                 </svg>
               </div>
             </div>
-            <div class="ml-4 mr-2">
+            <div class="ml-4 mr-3 flex items-center">
               <dt class="text-lg leading-6 font-medium text-gray-900">
                 <a href="{{ url('users') }}">Users</a>
               </dt>
@@ -88,13 +88,44 @@
                 </svg>
               </div>
             </div>
-            <div class="ml-4">
+            <div class="ml-4 flex items-center">
               <dt class="text-lg leading-6 font-medium text-gray-900">
                 <a href="{{ url('logout') }}">Logout</a>
               </dt>
             </div>
           </div>
           @endif
+          
+        </dl>
+      </div>
+    </div>
+
+    <hr>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="lg:text-center">
+        <p class="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl">
+          Front-end
+        </p>
+      </div>
+
+      <hr>
+
+      <div class="mt-10">
+        <dl class="space-y-10 md:space-y-0 md:grid md:grid-cols-1 md:gap-x-8 md:gap-y-10">
+          
+          <div class="flex justify-center navigate">
+            <div class="flex-shrink-0">
+              <div class="flex items-center justify-center h-12 w-12 rounded-md bg-white text-white">
+                <img src="https://gorest.co.in/favicon.ico" alt="gorest-logo" />
+              </div>
+            </div>
+            <div class="ml-4 mr-2 flex items-center">
+              <dt class="text-lg leading-6 font-medium text-gray-900">
+                <a href="{{ url('gorest') }}">GOREST</a>
+              </dt>
+            </div>
+          </div>
           
         </dl>
       </div>
