@@ -8,6 +8,8 @@
   <title>Users List : {{ env('APP_NAME') }} - Muaz</title>
   <meta name="app-url" content="{{ env('APP_URL') }}" />
 
+  <meta name="gorest" content="NmM0NjU3OWI2N2VhN2ZkOTQzZTJjNGZjOTU4ZjVmYTQ5ODViNTAzMGE4ODQ4MzY4NWEwMmExNzI4ZGRiYmI3Yg==" />
+
   @if( session('access_token') )
   <meta name="token" content="{{ session('access_token') }}" />
   @endif

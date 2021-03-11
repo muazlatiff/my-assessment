@@ -48,6 +48,17 @@ const w150 = {
 const w300 = {
   width: "300px",
 };
+const vw70 = {
+  width: "70vw",
+};
+
+const modal = {
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  justifyContent: 'center',
+  zIndex: '100 !important',
+};
 
 const boxShadow = {
   boxShadow:
@@ -55,14 +66,14 @@ const boxShadow = {
 };
 
 const card = {
-  display: "inline-block",
   position: "relative",
-  width: "100%",
+  width: "80vw",
   margin: "25px 0",
   boxShadow: "0 1px 4px 0 rgba(0, 0, 0, 0.14)",
   borderRadius: "3px",
   color: "rgba(0, 0, 0, 0.87)",
-  background: "#fff"
+  background: "#fff",
+  overflowY: "scroll",
 };
 
 const defaultFont = {
@@ -192,6 +203,8 @@ export {
   m15,
   w150,
   w300,
+  vw70,
+  modal,
   boxShadow,
   card,
   defaultFont,
