@@ -22,9 +22,17 @@ let customJsDir = 'resources/js/pages';
     'register.js',
     'login.js',
     'users.js',
+    'gorest.js',
 
 ].forEach(js => {
-    mix.js(`${customJsDir}/${js}`, 'public/js/pages/');
+    if( js === 'gorest.js' ) {
+        mix.js(`${customJsDir}/${js}`, 'public/js/pages/').react();
+    }
+
+    else {
+        mix.js(`${customJsDir}/${js}`, 'public/js/pages/');
+    }
+
     mix.copyDirectory(`public/js/pages/${js}`, `${customJsDir}/min/${js}`)
         .then(function() {
             // comment this when npm run watch

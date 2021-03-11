@@ -13,6 +13,7 @@ class JsController extends Controller
             'app.js',
             'register.js',
             'login.js',
+            'gorest.js',
         ];
         $jsAuth = [
             'users.js',

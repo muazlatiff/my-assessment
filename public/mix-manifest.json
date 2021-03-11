@@ -3,8 +3,10 @@
     "/js/pages/register.js": "/js/pages/register.js",
     "/js/pages/login.js": "/js/pages/login.js",
     "/js/pages/users.js": "/js/pages/users.js",
+    "/js/pages/gorest.js": "/js/pages/gorest.js",
     "/css/app.css": "/css/app.css",
     "/resources/js/pages/min/register.js": "/resources/js/pages/min/register.js",
     "/resources/js/pages/min/login.js": "/resources/js/pages/min/login.js",
-    "/resources/js/pages/min/users.js": "/resources/js/pages/min/users.js"
+    "/resources/js/pages/min/users.js": "/resources/js/pages/min/users.js",
+    "/resources/js/pages/min/gorest.js": "/resources/js/pages/min/gorest.js"
 }
